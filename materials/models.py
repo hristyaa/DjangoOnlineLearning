@@ -64,6 +64,7 @@ class Lesson(models.Model):
         help_text="Укажите название курса",
         blank=True,
         null=True,
+        related_name='lessons',
     )
 
     def __str__(self):
