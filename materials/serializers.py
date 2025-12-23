@@ -17,6 +17,7 @@ class CourseSerializer(ModelSerializer):
 
 
 class CourseDetailSerializer(ModelSerializer):
+    """Сериализатор для вывода количества уроков в курсе"""
     count_lessons = SerializerMethodField()
 
     def get_count_lessons(self, course):
