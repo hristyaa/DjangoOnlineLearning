@@ -47,7 +47,10 @@ class Payment(models.Model):
     PAIMENT_METHOD_CHOICES = [("cash", "Наличные"), ("cashless", "Перевод на счет")]
 
     user = models.ForeignKey(
-        User, on_delete=models.CASCADE, verbose_name="Пользователь", related_name='payments',
+        User,
+        on_delete=models.CASCADE,
+        verbose_name="Пользователь",
+        related_name="payments",
     )
     date_payed = models.DateTimeField(auto_now_add=True, verbose_name="Дата оплаты")
     paid_course = models.ForeignKey(
@@ -56,7 +59,7 @@ class Payment(models.Model):
         verbose_name="Оплаченный курс",
         blank=True,
         null=True,
-        related_name='payments',
+        related_name="payments",
     )
     paid_lesson = models.ForeignKey(
         Lesson,
@@ -64,7 +67,7 @@ class Payment(models.Model):
         verbose_name="Оплаченный урок",
         blank=True,
         null=True,
-        related_name='payments',
+        related_name="payments",
     )
     payment_amount = models.PositiveIntegerField(verbose_name="Сумма оплаты")
     payment_method = models.CharField(
@@ -75,7 +78,7 @@ class Payment(models.Model):
     )
 
     def __str__(self):
-        return f'{self.date_payed} - {self.payment_amount}'
+        return f"{self.date_payed} - {self.payment_amount}"
 
     class Meta:
         verbose_name = "Платеж"

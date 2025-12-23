@@ -10,7 +10,6 @@ from materials.serializers import (CourseDetailSerializer, CourseSerializer,
 
 class CourseViewSet(ModelViewSet):
     queryset = Course.objects.all()
-    serializer_class = CourseSerializer
 
     def get_serializer_class(self):
         if self.action == "retrieve":

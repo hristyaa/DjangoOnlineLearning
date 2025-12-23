@@ -30,17 +30,13 @@ class CourseDetailSerializer(ModelSerializer):
         lessons = Lesson.objects.filter(course=course)
         return [
             {
-                'id': lesson.id,
-                'name': lesson.name,
-                'description': lesson.description,
+                "id": lesson.id,
+                "name": lesson.name,
+                "description": lesson.description,
             }
-                for lesson in lessons]
+            for lesson in lessons
+        ]
 
     class Meta:
         model = Course
-        fields = (
-            "name",
-            "description",
-            "count_lessons",
-            "lessons"
-        )
+        fields = ("name", "description", "count_lessons", "lessons")
