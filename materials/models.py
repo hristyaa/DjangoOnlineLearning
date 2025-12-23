@@ -1,6 +1,5 @@
 from django.db import models
 
-
 # Create your models here.
 
 
@@ -28,8 +27,8 @@ class Course(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = 'курс'
-        verbose_name_plural = 'курсы'
+        verbose_name = "курс"
+        verbose_name_plural = "курсы"
 
 
 class Lesson(models.Model):
@@ -64,12 +63,12 @@ class Lesson(models.Model):
         help_text="Укажите название курса",
         blank=True,
         null=True,
-        related_name='lessons',
+        related_name="lessons",
     )
 
     def __str__(self):
         return self.name
 
     class Meta:
-        verbose_name = 'урок'
-        verbose_name_plural = 'уроки'
+        verbose_name = "урок"
+        verbose_name_plural = "уроки"

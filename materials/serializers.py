@@ -7,17 +7,18 @@ from materials.models import Course, Lesson
 class LessonSerializer(ModelSerializer):
     class Meta:
         model = Lesson
-        fields = '__all__'
+        fields = "__all__"
 
 
 class CourseSerializer(ModelSerializer):
     class Meta:
         model = Course
-        fields = '__all__'
+        fields = "__all__"
 
 
 class CourseDetailSerializer(ModelSerializer):
     """Сериализатор для вывода количества уроков в курсе"""
+
     count_lessons = SerializerMethodField()
 
     def get_count_lessons(self, course):
@@ -25,4 +26,8 @@ class CourseDetailSerializer(ModelSerializer):
 
     class Meta:
         model = Course
-        fields = ('name', 'description', 'count_lessons', )
+        fields = (
+            "name",
+            "description",
+            "count_lessons",
+        )
