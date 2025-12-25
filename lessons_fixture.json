@@ -1,0 +1,46 @@
+[
+{
+    "model": "materials.lesson",
+    "pk": 1,
+    "fields": {
+        "name": "Основы веба",
+        "description": "Познакомитесь с основами веба, изучите основные концепции сети, протокола HTTP и веб-приложений",
+        "image": "",
+        "video_url": null,
+        "course": 2
+    }
+},
+{
+    "model": "materials.lesson",
+    "pk": 2,
+    "fields": {
+        "name": "Базовые SQL-запросы",
+        "description": "Узнаете, как работать с БД при помощи SQL",
+        "image": "",
+        "video_url": null,
+        "course": 3
+    }
+},
+{
+    "model": "materials.lesson",
+    "pk": 3,
+    "fields": {
+        "name": "Django",
+        "description": "Django",
+        "image": "",
+        "video_url": null,
+        "course": 2
+    }
+},
+{
+    "model": "materials.lesson",
+    "pk": 4,
+    "fields": {
+        "name": "Продвинутый синтаксис",
+        "description": null,
+        "image": "",
+        "video_url": null,
+        "course": 1
+    }
+}
+]

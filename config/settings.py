@@ -12,8 +12,8 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 import os
 from pathlib import Path
-from dotenv import load_dotenv
 
+from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -42,8 +42,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "django_filters",
     "users",
-    "materials"
+    "materials",
 ]
 
 MIDDLEWARE = [
@@ -78,6 +79,10 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
+
+REST_FRAMEWORK = {
+    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"]
+}
 
 DATABASES = {
     "default": {
