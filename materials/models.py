@@ -1,5 +1,7 @@
 from django.db import models
 
+from users.models import User
+
 # Create your models here.
 
 
@@ -21,6 +23,14 @@ class Course(models.Model):
         null=True,
         verbose_name="Описание курса",
         help_text="Укажите описание курса",
+    )
+    owner = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        verbose_name="Владелец",
+        help_text="Укажите владельца",
     )
 
     def __str__(self):
@@ -64,6 +74,14 @@ class Lesson(models.Model):
         blank=True,
         null=True,
         related_name="lessons",
+    )
+    owner = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        verbose_name="Владелец",
+        help_text="Укажите владельца",
     )
 
     def __str__(self):

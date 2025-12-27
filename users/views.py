@@ -1,7 +1,8 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
-from rest_framework.generics import ListAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView, \
-    RetrieveAPIView
+from rest_framework.generics import (CreateAPIView, DestroyAPIView,
+                                     ListAPIView, RetrieveAPIView,
+                                     UpdateAPIView)
 from rest_framework.permissions import AllowAny
 
 from users.models import Payment, User
@@ -20,6 +21,7 @@ class PaymentListAPIView(ListAPIView):
 
 class UserCreateAPIView(CreateAPIView):
     """Регистрация пользователя"""
+
     serializer_class = UserSerializer
     queryset = User.objects.all()
     permission_classes = (AllowAny,)
@@ -32,23 +34,27 @@ class UserCreateAPIView(CreateAPIView):
 
 class UserListAPIView(ListAPIView):
     """Для просмотра списка пользователей"""
+
     serializer_class = UserSerializer
     queryset = User.objects.all()
 
 
 class UserRetrieveAPIView(RetrieveAPIView):
     """Для просмотра одного пользователя"""
+
     serializer_class = UserSerializer
     queryset = User.objects.all()
 
 
 class UserUpdateAPIView(UpdateAPIView):
     """Для редактирования пользователя"""
+
     serializer_class = UserSerializer
     queryset = User.objects.all()
 
 
 class UserDestroyAPIView(DestroyAPIView):
     """Для удаления пользователя"""
+
     serializer_class = UserSerializer
     queryset = User.objects.all()

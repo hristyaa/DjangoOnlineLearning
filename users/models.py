@@ -1,7 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-from materials.models import Course, Lesson
 
 # Create your models here.
 
@@ -54,7 +53,7 @@ class Payment(models.Model):
     )
     date_payed = models.DateTimeField(auto_now_add=True, verbose_name="Дата оплаты")
     paid_course = models.ForeignKey(
-        Course,
+        "materials.Course",
         on_delete=models.SET_NULL,
         verbose_name="Оплаченный курс",
         blank=True,
@@ -62,7 +61,7 @@ class Payment(models.Model):
         related_name="payments",
     )
     paid_lesson = models.ForeignKey(
-        Lesson,
+        "materials.Lesson",
         on_delete=models.SET_NULL,
         verbose_name="Оплаченный урок",
         blank=True,
