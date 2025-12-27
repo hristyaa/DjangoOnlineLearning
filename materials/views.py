@@ -35,6 +35,7 @@ class CourseViewSet(ModelViewSet):
 
 class LessonCreateAPIView(CreateAPIView):
     serializer_class = LessonSerializer
+    permission_classes = [~IsModers]
 
     def perform_create(self, serializer):
         """Пользователь-создатель=владелец"""
@@ -61,3 +62,5 @@ class LessonUpdateAPIView(UpdateAPIView):
 class LessonDestroyAPIView(DestroyAPIView):
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
+
+    permission_classes = [~IsModers]
