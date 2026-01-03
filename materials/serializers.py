@@ -1,23 +1,27 @@
+from django.core.validators import URLValidator
+from rest_framework import serializers
 from rest_framework.fields import SerializerMethodField
-from rest_framework.serializers import ModelSerializer
 
 from materials.models import Course, Lesson
+from materials.validators import validate_url
 
 
-class LessonSerializer(ModelSerializer):
+class LessonSerializer(serializers.ModelSerializer):
+    video_url = serializers.URLField(validators=[validate_url])
+
     class Meta:
         model = Lesson
         fields = "__all__"
 
 
-class CourseSerializer(ModelSerializer):
+class CourseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Course
         fields = "__all__"
 
 
-class CourseDetailSerializer(ModelSerializer):
+class CourseDetailSerializer(serializers.ModelSerializer):
     """Сериализатор для вывода количества и информации об уроках в курсе"""
 
     count_lessons = SerializerMethodField()
