@@ -90,3 +90,31 @@ class Lesson(models.Model):
     class Meta:
         verbose_name = "урок"
         verbose_name_plural = "уроки"
+
+
+class Subscription(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        verbose_name="Пользователь",
+        help_text="Укажите подписанного пользователя",
+        related_name="subscriptions",
+    )
+    course = models.ForeignKey(
+        Course,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        verbose_name="Курс",
+        help_text="Укажите название курса",
+        related_name="subscriptions",
+    )
+
+    def __str__(self):
+        return self.user - self.course
+
+    class Meta:
+        verbose_name = "подписка"
+        verbose_name_plural = "подписки"

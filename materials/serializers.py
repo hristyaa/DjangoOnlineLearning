@@ -2,7 +2,7 @@ from django.core.validators import URLValidator
 from rest_framework import serializers
 from rest_framework.fields import SerializerMethodField
 
-from materials.models import Course, Lesson
+from materials.models import Course, Lesson, Subscription
 from materials.validators import validate_url
 
 
@@ -15,10 +15,16 @@ class LessonSerializer(serializers.ModelSerializer):
 
 
 class CourseSerializer(serializers.ModelSerializer):
+    is_subscribed = serializers.SerializerMethodField()
 
     class Meta:
         model = Course
         fields = "__all__"
+
+    def get_is_subscribed(self, obj):
+        """Метод для определения наличия/отсутствия подписки"""
+        user = self.context["request"].user
+        return Subscription.objects.filter(user=user, course=obj).exists()
 
 
 class CourseDetailSerializer(serializers.ModelSerializer):
