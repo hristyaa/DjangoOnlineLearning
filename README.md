@@ -90,3 +90,6 @@ python manage.py csu
 ```
 python manage.py test
 ```
+## Документация 
+Документация, сгенерированная с помощью drf-yasg, представлена по URL: `http://127.0.0.1:8000/swagger/`,
+`http://127.0.0.1:8000/redoc/`
