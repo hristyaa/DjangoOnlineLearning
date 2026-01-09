@@ -1,4 +1,3 @@
-from django.core.validators import URLValidator
 from rest_framework import serializers
 from rest_framework.fields import SerializerMethodField
 

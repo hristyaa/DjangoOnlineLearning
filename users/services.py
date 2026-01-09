@@ -5,9 +5,9 @@ from config.settings import STRIPE_API_KEY
 stripe.api_key = STRIPE_API_KEY
 
 
-def create_stripe_product(product_name):
+def create_stripe_product(product_name, product_description):
     """Создает продукт в страйпе"""
-    return stripe.Product.create(name=product_name)
+    return stripe.Product.create(name=product_name, description=product_description)
 
 
 def create_stripe_price(product_id, price):

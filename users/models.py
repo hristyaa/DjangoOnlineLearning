@@ -73,7 +73,7 @@ class Payment(models.Model):
     payment_method = models.CharField(
         max_length=50,
         choices=PAIMENT_METHOD_CHOICES,
-        default="cash",
+        default="cashless",
         verbose_name="Способ оплаты",
     )
     session_id = models.CharField(
