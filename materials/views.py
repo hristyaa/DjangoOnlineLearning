@@ -1,3 +1,5 @@
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework.generics import (CreateAPIView, DestroyAPIView,
                                      ListAPIView, RetrieveAPIView,
                                      UpdateAPIView, get_object_or_404)
@@ -96,6 +98,45 @@ class SubscriptionAPIView(APIView):
 
     permission_classes = (IsAuthenticated,)
 
+    @swagger_auto_schema(
+        operation_description="""
+           Управление подпиской.
+           Если пользователь уже подписан - подписка удаляется.
+           Если не подписан - подписка добавляется.
+           """,
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            required=["course_id"],
+            properties={
+                "course_id": openapi.Schema(
+                    type=openapi.TYPE_INTEGER, description="id курса", example=1
+                ),
+            },
+            example={"course_id": 1},
+        ),
+        responses={
+            200: openapi.Response(
+                description="Успешный ответ",
+                schema=openapi.Schema(
+                    type=openapi.TYPE_OBJECT,
+                    properties={
+                        "message": openapi.Schema(
+                            type=openapi.TYPE_STRING,
+                            enum=["подписка удалена", "подписка добавлена"],
+                        ),
+                    },
+                ),
+                examples={
+                    "application/json": {
+                        "examples": {
+                            "удаление": {"message": "подписка удалена"},
+                            "создание": {"message": "подписка добавлена"},
+                        }
+                    }
+                },
+            )
+        },
+    )
     def post(self, *args, **kwargs):
         user = self.request.user
         course_id = self.request.data.get("course_id")
