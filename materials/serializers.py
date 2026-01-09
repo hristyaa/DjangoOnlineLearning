@@ -1,23 +1,33 @@
+from django.core.validators import URLValidator
+from rest_framework import serializers
 from rest_framework.fields import SerializerMethodField
-from rest_framework.serializers import ModelSerializer
 
-from materials.models import Course, Lesson
+from materials.models import Course, Lesson, Subscription
+from materials.validators import validate_url
 
 
-class LessonSerializer(ModelSerializer):
+class LessonSerializer(serializers.ModelSerializer):
+    video_url = serializers.URLField(validators=[validate_url])
+
     class Meta:
         model = Lesson
         fields = "__all__"
 
 
-class CourseSerializer(ModelSerializer):
+class CourseSerializer(serializers.ModelSerializer):
+    is_subscribed = serializers.SerializerMethodField()
 
     class Meta:
         model = Course
         fields = "__all__"
 
+    def get_is_subscribed(self, obj):
+        """Метод для определения наличия/отсутствия подписки"""
+        user = self.context["request"].user
+        return Subscription.objects.filter(user=user, course=obj).exists()
 
-class CourseDetailSerializer(ModelSerializer):
+
+class CourseDetailSerializer(serializers.ModelSerializer):
     """Сериализатор для вывода количества и информации об уроках в курсе"""
 
     count_lessons = SerializerMethodField()

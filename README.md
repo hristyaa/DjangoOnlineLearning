@@ -86,3 +86,7 @@ URL: `http://127.0.0.1:8000/users/payments/`
 ```
 python manage.py csu
 ```
+## Тестирование:
+```
+python manage.py test
+```
