@@ -7,7 +7,9 @@
         "description": "Познакомитесь с основами веба, изучите основные концепции сети, протокола HTTP и веб-приложений",
         "image": "",
         "video_url": null,
-        "course": 2
+        "course": 2,
+        "owner": null,
+        "amount": 1000
     }
 },
 {
@@ -18,18 +20,22 @@
         "description": "Узнаете, как работать с БД при помощи SQL",
         "image": "",
         "video_url": null,
-        "course": 3
+        "course": 3,
+        "owner": null,
+        "amount": 1000
     }
 },
 {
     "model": "materials.lesson",
     "pk": 3,
     "fields": {
-        "name": "Django",
+        "name": "Знакомство с Django",
         "description": "Django",
         "image": "",
         "video_url": null,
-        "course": 2
+        "course": 2,
+        "owner": null,
+        "amount": 1000
     }
 },
 {
@@ -40,7 +46,61 @@
         "description": null,
         "image": "",
         "video_url": null,
-        "course": 1
+        "course": 1,
+        "owner": null,
+        "amount": 1000
+    }
+},
+{
+    "model": "materials.lesson",
+    "pk": 5,
+    "fields": {
+        "name": "Права доступа в DRF",
+        "description": "Вы будете учиться создавать безопасные и гибкие веб-приложения с использованием DRF. Рассмотрите три важных аспекта разработки: авторизацию с использованием JWT, установку прав доступа на модель и контроллер",
+        "image": "",
+        "video_url": null,
+        "course": 4,
+        "owner": 7,
+        "amount": 1000
+    }
+},
+{
+    "model": "materials.lesson",
+    "pk": 7,
+    "fields": {
+        "name": "Сериализаторы",
+        "description": "Вы будете изучать ключевые концепции, необходимые для разработки приложений с использованием сериализаторов.",
+        "image": "",
+        "video_url": null,
+        "course": 4,
+        "owner": 7,
+        "amount": 1000
+    }
+},
+{
+    "model": "materials.lesson",
+    "pk": 8,
+    "fields": {
+        "name": "Объектно-ориентированное программирование",
+        "description": null,
+        "image": "",
+        "video_url": "https://youtube.com/",
+        "course": null,
+        "owner": 7,
+        "amount": 1000
+    }
+},
+{
+    "model": "materials.lesson",
+    "pk": 9,
+    "fields": {
+        "name": "Объектно-ориентированное программирование",
+        "description": null,
+        "image": "",
+        "video_url": "https://youtube.com/123",
+        "course": null,
+        "owner": 7,
+        "amount": 1000
     }
 }
 ]

@@ -1,29 +1,57 @@
 [
-  {
+{
     "model": "materials.course",
     "pk": 1,
     "fields": {
-      "name": "Python-разработчик",
-      "image": "",
-      "description": "Обучение по написанию программ"
+        "name": "Python-разработчик",
+        "image": "",
+        "description": "Обучение по написанию программ",
+        "owner": null,
+        "amount": 3000
     }
-  },
-  {
+},
+{
     "model": "materials.course",
     "pk": 2,
     "fields": {
-      "name": "Разработка веб-приложений на Django",
-      "image": "",
-      "description": "Уделите внимание формам для обработки данных, настроите аутентификацию пользователей, разберетесь с управлением правами доступа. Научитесь внедрять механизмы кеширования и освоите принципы построения бизнес-логики."
+        "name": "Разработка веб-приложений на Django",
+        "image": "",
+        "description": "Уделите внимание формам для обработки данных, настроите аутентификацию пользователей, разберетесь с управлением правами доступа. Научитесь внедрять механизмы кеширования и освоите принципы построения бизнес-логики.",
+        "owner": null,
+        "amount": 3000
     }
-  },
-  {
+},
+{
     "model": "materials.course",
     "pk": 3,
     "fields": {
-      "name": "Работа с базами данных",
-      "image": "",
-      "description": null
+        "name": "Работа с базами данных",
+        "image": "",
+        "description": null,
+        "owner": null,
+        "amount": 3000
     }
-  }
+},
+{
+    "model": "materials.course",
+    "pk": 4,
+    "fields": {
+        "name": "Django REST Framework",
+        "image": "",
+        "description": "Вы познакомитесь на курсе с основными концепциями и инструментами Django REST framework (DRF) для разработки мощных и масштабируемых RESTful API",
+        "owner": 7,
+        "amount": 3000
+    }
+},
+{
+    "model": "materials.course",
+    "pk": 6,
+    "fields": {
+        "name": "Объектно-ориентированное программирование",
+        "image": "",
+        "description": null,
+        "owner": 7,
+        "amount": 3000
+    }
+}
 ]
