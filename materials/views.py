@@ -1,3 +1,5 @@
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework.generics import (CreateAPIView, DestroyAPIView,
                                      ListAPIView, RetrieveAPIView,
                                      UpdateAPIView, get_object_or_404)
@@ -14,6 +16,8 @@ from users.permissions import IsModers, IsOwner
 
 
 class CourseViewSet(ModelViewSet):
+    """Viewset for courses."""
+
     queryset = Course.objects.all()
     pagination_class = CustomPagination
 
@@ -45,6 +49,8 @@ class CourseViewSet(ModelViewSet):
 
 
 class LessonCreateAPIView(CreateAPIView):
+    """Создание урока."""
+
     serializer_class = LessonSerializer
     permission_classes = (
         ~IsModers,
@@ -59,12 +65,16 @@ class LessonCreateAPIView(CreateAPIView):
 
 
 class LessonListAPIView(ListAPIView):
+    """Список уроков."""
+
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
     pagination_class = CustomPagination
 
 
 class LessonRetrieveAPIView(RetrieveAPIView):
+    """Детальный просмотр урока"""
+
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
     permission_classes = (
@@ -74,6 +84,8 @@ class LessonRetrieveAPIView(RetrieveAPIView):
 
 
 class LessonUpdateAPIView(UpdateAPIView):
+    """Редактирование урока"""
+
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
     permission_classes = (
@@ -83,6 +95,8 @@ class LessonUpdateAPIView(UpdateAPIView):
 
 
 class LessonDestroyAPIView(DestroyAPIView):
+    """Удаление урока"""
+
     serializer_class = LessonSerializer
     queryset = Lesson.objects.all()
     permission_classes = (
@@ -96,6 +110,45 @@ class SubscriptionAPIView(APIView):
 
     permission_classes = (IsAuthenticated,)
 
+    @swagger_auto_schema(
+        operation_description="""
+           Управление подпиской.
+           Если пользователь уже подписан - подписка удаляется.
+           Если не подписан - подписка добавляется.
+           """,
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            required=["course_id"],
+            properties={
+                "course_id": openapi.Schema(
+                    type=openapi.TYPE_INTEGER, description="id курса", example=1
+                ),
+            },
+            example={"course_id": 1},
+        ),
+        responses={
+            200: openapi.Response(
+                description="Успешный ответ",
+                schema=openapi.Schema(
+                    type=openapi.TYPE_OBJECT,
+                    properties={
+                        "message": openapi.Schema(
+                            type=openapi.TYPE_STRING,
+                            enum=["подписка удалена", "подписка добавлена"],
+                        ),
+                    },
+                ),
+                examples={
+                    "application/json": {
+                        "examples": {
+                            "удаление": {"message": "подписка удалена"},
+                            "создание": {"message": "подписка добавлена"},
+                        }
+                    }
+                },
+            )
+        },
+    )
     def post(self, *args, **kwargs):
         user = self.request.user
         course_id = self.request.data.get("course_id")
