@@ -1,8 +1,13 @@
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
-from rest_framework.generics import (CreateAPIView, DestroyAPIView,
-                                     ListAPIView, RetrieveAPIView,
-                                     UpdateAPIView, get_object_or_404)
+from rest_framework.generics import (
+    CreateAPIView,
+    DestroyAPIView,
+    ListAPIView,
+    RetrieveAPIView,
+    UpdateAPIView,
+    get_object_or_404,
+)
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -10,8 +15,12 @@ from rest_framework.viewsets import ModelViewSet
 
 from materials.models import Course, Lesson, Subscription
 from materials.paginators import CustomPagination
-from materials.serializers import (CourseDetailSerializer, CourseSerializer,
-                                   LessonSerializer)
+from materials.serializers import (
+    CourseDetailSerializer,
+    CourseSerializer,
+    LessonSerializer,
+)
+from materials.tasks import send_email_about_update_course
 from users.permissions import IsModers, IsOwner
 
 
@@ -46,6 +55,14 @@ class CourseViewSet(ModelViewSet):
         elif self.action == "destroy":
             self.permission_classes = (IsOwner | ~IsModers,)
         return super().get_permissions()
+
+    def perform_update(self, serializer):
+        """Отправление письма подписчикам курса при его обновлении"""
+        super().perform_update(serializer)
+        course = serializer.instance  # обновленный объект Course из бд
+        subscribers = Subscription.objects.filter(course=course)  # все подписчики курса
+        for subscriber in subscribers:  # отправка письма подписчику через задачу celery
+            send_email_about_update_course.delay(subscriber.user.email, course.name)
 
 
 class LessonCreateAPIView(CreateAPIView):
