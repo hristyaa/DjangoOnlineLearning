@@ -10,7 +10,13 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Устанавливаем Poetry
-RUN pip install poetry
+RUN pip install --no-cache-dir poetry
+
+# Отключаем виртуальное окружение Poetry
+ENV POETRY_VIRTUALENVS_CREATE=false \
+    POETRY_NO_INTERACTION=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
 
 # Копируем файлы Poetry
 COPY pyproject.toml poetry.lock ./
