@@ -48,7 +48,13 @@ jobs:
 
       - name: Run tests
         env:
+          POSTGRES_NAME: django_online_learning
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          POSTGRES_HOST: db
+          POSTGRES_PORT: 5432
           SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+          DEBUG: "True"
         run: poetry run python manage.py test
 
   build:
