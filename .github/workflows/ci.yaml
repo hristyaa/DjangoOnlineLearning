@@ -48,7 +48,7 @@ jobs:
 
       - name: Run tests
         env:
-          POSTGRES_NAME: django_online_learning
+          POSTGRES_DB: django_online_learning
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
           POSTGRES_HOST: localhost
@@ -93,7 +93,3 @@ jobs:
             sudo docker compose up -d --build
             sudo docker compose exec -T backend python manage.py migrate
           EOF
-
-
-
-
