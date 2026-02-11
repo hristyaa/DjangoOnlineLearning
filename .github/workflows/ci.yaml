@@ -51,7 +51,7 @@ jobs:
           POSTGRES_DB: django_online_learning
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          POSTGRES_HOST: localhost
+          POSTGRES_HOST: 127.0.0.1
           POSTGRES_PORT: 5432
           SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
           DEBUG: "True"
