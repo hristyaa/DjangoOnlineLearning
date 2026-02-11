@@ -140,3 +140,118 @@ python manage.py test
 
 Документация, сгенерированная с помощью drf-yasg, представлена по URL: `http://127.0.0.1:8000/swagger/`,
 `http://127.0.0.1:8000/redoc/`
+
+## Настройка удаленного сервера и деплоя
+### Подключение к серверу
+
+```
+ssh user@your_server_ip
+```
+### Обновление списка пакетов и обновление всех установленных пакетов до их последних версий 
+```
+sudo apt update
+sudo apt upgrade
+```
+### Установка Docker 
+Чтобы установить Docker, воспользуйтесь инструкцией по установке с официального сайта: https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository.
+
+### Настройка файрвола
+- Сначала проверьте состояние файрвола с помощью команды:
+```
+sudo ufw status
+```
+- Если файрвол отключен, активируйте его:
+```
+sudo ufw enable
+```
+- Теперь откройте необходимые порты:
+- Порт 80 для HTTP:
+```
+sudo ufw allow 80/tcp
+```
+- Порт 443 для HTTPS:
+```
+sudo ufw allow 443/tcp
+```
+- Откройте порт 22 для SSH:
+Введите следующую команду в терминале, чтобы разрешить входящие соединения через порт 22:
+```
+sudo ufw allow 22/tcp
+```
+- Проверьте настройки файрвола:
+```
+sudo ufw status
+```
+Теперь ваш сервер безопасен и доступен для управления через SSH, а также для обработки HTTP и HTTPS запросов.
+### Создание директории проекта
+```
+mkdir /projects/DjangoOnlineLearning
+```
+### Клонирование репозитория
+```
+cd /projects/DjangoOnlineLearning
+git clone https://github.com/hristyaa/DjangoOnlineLearning.git
+```
+### Настройка переменных окружения
+Создать файл .env с переменными окружения на основе `.env.example`
+```
+nano .env
+```
+### Запуск контейнеров через Docker Compose
+```
+docker compose up -d --build
+```
+### Проверка запуска контейнеров через Docker Compose
+```
+docker compose ps
+```
+### Остановка сервисов:
+```
+docker compose down
+```
+
+### Использование Nginx
+
+В проекте используется отдельный Docker-контейнер с Nginx.
+Дополнительная установка Nginx на сервере не требуется,
+так как он запускается внутри Docker-контейнера.
+Контейнер Nginx:
+- принимает HTTP-запросы на порт 80
+- проксирует запросы к Django-приложению
+- раздаёт статические файлы
+
+## Настройка GitHub Actions
+
+### 1. Добавление секретов в GitHub
+В репозитории перейдите в Settings -> Secrets and variables -> Actions и добавьте:
+- `SERVER_IP`: IP адрес вашего сервера
+- `SSH_USER`: имя пользователя на сервере
+- `SSH_KEY`: содержимое приватного SSH ключа (id_rsa)
+- `DOCKER_HUB_USERNAME`: имя пользователя на Docker Hub
+- `DOCKER_HUB_ACCESS_TOKEN`: токкен на Docker Hub
+- `DJANGO_SECRET_KEY`: секретный ключ Django
+- `DEPLOY_DIR`: расположение репозитория на сервере
+- `DB_PASSWORD`: пароль от базы данных
+
+### 2. Workflow
+- Файл `.github/workflows/ci.yml`.
+- Workflow запускается автоматически при push и создании pull request в ветку develop
+- Также workflow можно запустить вручную:
+GitHub → Actions → выбрать workflow → Run workflow
+
+#### Этапы workflow:
+1. Lint (проверка кода) - устанавливается Python 3.13, flake8 и запускается линтер
+2. Test (запуск тестов) - используется PostgreSQL 16 (как сервис в GitHub Actions), Poetry для управления зависимостями
+3. Build (сборка Docker-образа) - Выполняется авторизация в Docker Hub, собирается Docker-образ приложения, Образ отправляется в Docker Hub
+4. Deploy (деплой на удалённый сервер):
+- Подключение к серверу по SSH
+- Переход в директорию проекта: `cd ~/projects/DjangoOnlineLearning`
+- Переключение на ветку develop
+- Обновление кода: `git pull origin develop`
+- Остановка контейнеров: `docker compose down`
+- Пересборка и запуск контейнеров: `docker compose up -d --build`
+- Применение миграций: `docker compose exec backend python manage.py migrate`
+
+Реализован полный CI/CD процесс.
+
+

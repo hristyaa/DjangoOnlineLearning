@@ -71,6 +71,7 @@ class LessonTestCase(APITestCase):
                     "image": None,
                     "course": self.course.pk,
                     "owner": self.user.pk,
+                    "amount": self.lesson.amount,
                 }
             ],
         }
